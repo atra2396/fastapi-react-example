@@ -1,7 +1,9 @@
 FROM node:17-alpine as ui-build
 WORKDIR /app
+COPY ui/package.json ui/package-lock.json ./
+RUN npm ci
 COPY ui/ .
-RUN npm install && npm run build
+RUN npm run build
 
 FROM python:3.9-slim-buster as final
 WORKDIR /app
